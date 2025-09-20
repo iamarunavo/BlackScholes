@@ -1,133 +1,199 @@
-# Black-Scholes Option Pricing Calculator
+# 🚀 Black-Scholes Interactive Dashboard
 
-A Streamlit application for calculating European Call and Put option prices using the Black-Scholes formula, with interactive visualizations and Greeks calculations.
+A comprehensive **Streamlit web application** for calculating European Call and Put option prices using the Black-Scholes formula, featuring interactive visualizations, real-time market data integration, and educational content.
 
-## Features
+## ✨ Features
 
-- **Black-Scholes Option Pricing**: Calculate European Call and Put option prices
-- **Interactive Interface**: Adjust parameters in real-time using Streamlit widgets
-- **Visualization**: Plot option prices vs spot price with interactive charts
-- **Greeks Calculation**: Compute Delta, Gamma, Theta, and Vega
-- **Put-Call Parity Verification**: Validate calculations using put-call parity
-- **Mathematical Formulas**: Display the Black-Scholes formulas with LaTeX
+### 🎯 Core Functionality
+- **Black-Scholes Option Pricing**: Calculate European Call and Put option prices with high precision
+- **Live Market Data**: Fetch real-time stock prices using Yahoo Finance API
+- **Interactive Dashboard**: Real-time parameter adjustment with immediate visualization updates
+- **Comprehensive Greeks Analysis**: Calculate Delta, Gamma, Theta, Vega, and Rho with detailed explanations
 
-## Installation
+### 📊 Advanced Visualizations
+- **Price Sensitivity Charts**: Interactive plots showing option prices vs spot price and volatility
+- **Heatmap Analysis**: 2D heatmaps displaying option prices across different spot prices and volatilities
+- **Real-time Metrics**: Live display of current parameters and calculated option prices
+- **Professional UI**: Modern, responsive design with intuitive navigation
 
-1. Create a virtual environment (recommended):
+### 📚 Educational Content
+- **Step-by-Step Derivation**: Complete mathematical derivation of the Black-Scholes formula
+- **Interactive Learning**: Explanations of key concepts with real-time examples
+- **Put-Call Parity Verification**: Mathematical validation of calculations
+- **Greeks Explanations**: Detailed explanations of what each Greek represents
+
+## 🛠️ Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+
+### Setup Instructions
+
+1. **Clone the repository:**
+```bash
+git clone <repository-url>
+cd BlackScholes
+```
+
+2. **Create a virtual environment (recommended):**
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-2. Install the required packages:
+3. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-## Running the App
+## 🚀 Running the Application
 
-To run the Streamlit app, use the following command:
+### Web Application (Recommended)
 ```bash
 streamlit run app.py
 ```
+The application will open in your default web browser at `http://localhost:8501`.
 
-The app will open in your default web browser at `http://localhost:8501`.
+### Standalone Functions
+```bash
+python black_scholes.py
+```
+This will run the standalone Black-Scholes functions with example calculations.
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-├── app.py                 # Main Streamlit application
-├── black_scholes.py       # Standalone Black-Scholes functions
+BlackScholes/
+├── app.py                 # Main Streamlit web application (617 lines)
+├── black_scholes.py       # Standalone Black-Scholes functions (122 lines)
 ├── requirements.txt       # Python dependencies
 ├── README.md             # Project documentation
-└── .gitignore            # Git ignore file
+├── .gitignore            # Git ignore file
+└── .devcontainer/        # Development container configuration
 ```
 
-## Dependencies
+## 📦 Dependencies
 
-- **streamlit**: Web application framework
-- **numpy**: Numerical computing library
-- **matplotlib**: Plotting and visualization
-- **scipy**: Scientific computing library (for normal distribution)
+| Package | Version | Purpose |
+|---------|---------|---------|
+| **streamlit** | ≥1.28.0 | Web application framework |
+| **numpy** | ≥1.24.0 | Numerical computing |
+| **matplotlib** | ≥3.7.0 | Plotting and visualization |
+| **scipy** | ≥1.10.0 | Scientific computing (normal distribution) |
+| **seaborn** | ≥0.12.0 | Statistical data visualization |
+| **yfinance** | ≥0.2.0 | Real-time financial data |
 
-## Black-Scholes Formula
+## 🧮 Black-Scholes Formula Implementation
 
 The application implements the standard Black-Scholes formula for European options:
 
+### Mathematical Foundation
+
 **Call Option Price:**
 ```
-C = S * N(d₁) - K * e^(-rT) * N(d₂)
+C = S · N(d₁) - K · e^(-rT) · N(d₂)
 ```
 
 **Put Option Price:**
 ```
-P = K * e^(-rT) * N(-d₂) - S * N(-d₁)
+P = K · e^(-rT) · N(-d₂) - S · N(-d₁)
 ```
 
-Where:
-- d₁ = [ln(S/K) + (r + σ²/2)T] / (σ√T)
-- d₂ = d₁ - σ√T
-- S = Current stock price
-- K = Strike price
-- T = Time to maturity
-- r = Risk-free interest rate
-- σ = Volatility
-- N(·) = Cumulative normal distribution function
+**Where:**
+- `d₁ = [ln(S/K) + (r + σ²/2)T] / (σ√T)`
+- `d₂ = d₁ - σ√T`
+- `S` = Current stock price (Spot Price)
+- `K` = Strike price
+- `T` = Time to maturity (years)
+- `r` = Risk-free interest rate
+- `σ` = Volatility
+- `N(·)` = Cumulative standard normal distribution
 
-## Usage Examples
+## 💡 Usage Examples
 
-### Using the Standalone Function
+### Using the Standalone Functions
 
 ```python
-from black_scholes import black_scholes
+from black_scholes import black_scholes, black_scholes_greeks
 
-# Calculate call option price
-call_price = black_scholes(100, 100, 1, 0.05, 0.2, "call")
+# Example parameters
+S = 100  # Spot price
+K = 100  # Strike price
+T = 1.0  # Time to maturity (1 year)
+r = 0.05 # Risk-free rate (5%)
+sigma = 0.2  # Volatility (20%)
+
+# Calculate option prices
+call_price = black_scholes(S, K, T, r, sigma, "call")
+put_price = black_scholes(S, K, T, r, sigma, "put")
+
 print(f"Call Option Price: ${call_price:.4f}")
-
-# Calculate put option price
-put_price = black_scholes(100, 100, 1, 0.05, 0.2, "put")
 print(f"Put Option Price: ${put_price:.4f}")
-```
 
-### Calculating Greeks
-
-```python
-from black_scholes import black_scholes_greeks
-
-# Get price and Greeks
-greeks = black_scholes_greeks(100, 100, 1, 0.05, 0.2, "call")
-print(f"Price: ${greeks['price']:.4f}")
+# Calculate Greeks
+greeks = black_scholes_greeks(S, K, T, r, sigma, "call")
 print(f"Delta: {greeks['delta']:.4f}")
-print(f"Gamma: {greeks['gamma']:.4f}")
+print(f"Gamma: {greeks['gamma']:.6f}")
 print(f"Theta: {greeks['theta']:.4f}")
 print(f"Vega: {greeks['vega']:.4f}")
 ```
 
-## Testing
+### Web Application Features
 
-Run the standalone Black-Scholes function to verify calculations:
+1. **Interactive Dashboard Tab:**
+   - Real-time parameter adjustment
+   - Live option price calculations
+   - Sensitivity analysis charts
+   - Heatmap visualizations
+   - Comprehensive Greeks analysis
 
+2. **Educational Tab:**
+   - Complete mathematical derivation
+   - Step-by-step formula explanation
+   - Interactive examples with current parameters
+   - Put-call parity verification
+
+## 🧪 Testing & Validation
+
+### Run Built-in Tests
 ```bash
 python black_scholes.py
 ```
 
-This will output:
-- Call and Put option prices
-- Greeks for the call option
-- Put-call parity verification
+**Expected Output:**
+```
+Call Option Price: $10.4506
+Put Option Price: $5.5735
 
-## Customization
+Call Option Greeks:
+Price: $10.4506
+Delta: 0.6368
+Gamma: 0.0199
+Theta: -6.4147
+Vega: 37.8019
 
-The Streamlit app includes:
-- Interactive parameter inputs in the sidebar
-- Real-time price calculations
-- Option price vs spot price visualization
-- Mathematical formula display
-- Error handling for invalid inputs
+Put-Call Parity Check:
+Call - Put: $4.8771
+S - K*exp(-r*T): $4.8771
+Difference: $0.000000
+```
 
-Edit `app.py` to add additional features like:
-- More Greeks calculations
-- Different option types (American, Asian, etc.)
-- Monte Carlo simulations
-- Historical volatility calculations
+### Manual Testing
+The application includes comprehensive error handling and input validation for:
+- Invalid parameter ranges
+- Division by zero scenarios
+- Market data fetch failures
+- Mathematical edge cases
+
+## 📈 Real-World Applications
+
+This tool is perfect for:
+- **Options Traders**: Quick price calculations and Greeks analysis
+- **Financial Analysts**: Risk assessment and sensitivity analysis
+- **Students**: Learning quantitative finance concepts
+- **Researchers**: Prototyping and testing option pricing models
+
+---
+
+*Built using Streamlit, NumPy, and modern Python libraries*
