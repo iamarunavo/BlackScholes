@@ -1,5 +1,5 @@
 # 🚀 Black-Scholes Interactive Dashboard
-
+Created By: Arunavo Chowdhury, Yaseen Choudhury
 A comprehensive **Streamlit web application** for calculating European Call and Put option prices using the Black-Scholes formula, featuring interactive visualizations, real-time market data integration, and educational content.
 
 ## ✨ Features
